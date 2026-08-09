@@ -23,341 +23,48 @@ app.get('/', (req, res) => {
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
       <link rel="icon" href="https://e7.pngegg.com/pngimages/705/448/png-clipart-logo-imdb-film-logan-lerman-miscellaneous-celebrities-thumbnail.png" type="image/x-icon">
       <style>
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-        
-        html, body {
-          overflow-x: hidden;
-          min-height: 100vh;
-        }
-        
-        body {
-          font-family: 'Poppins', sans-serif;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-height: 100vh;
-          margin: 0;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          background-size: cover;
-          background-position: center;
-          background-attachment: fixed;
-          color: white;
-          flex-direction: column;
-          text-align: center;
-          padding: 20px;
-          position: relative;
-        }
-        
-        body::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-          pointer-events: none;
-        }
-        
-        .main-container {
-          position: relative;
-          z-index: 1;
-          animation: fadeInUp 1s ease-out;
-        }
-        
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .header-section {
-          margin-bottom: 5px; 
-        }
-        
-        .imdb-logo {
-          height: 35px; 
-          width: 70px;
-          margin-bottom: 10px;
-          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-          transition: transform 0.3s ease;
-        }
-        
-        .imdb-logo:hover {
-          transform: scale(1.1);
-        }
-        
-        .main-title {
-          background: linear-gradient(45deg, #fffeff, #ffd891, #ffc1b5a8);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          font-size: 1.2rem; 
-          font-weight: 700;
-          text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-          margin-bottom: 5px; 
-          animation: shimmer 2s infinite;
-        }
-        
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        
-        form {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          background: rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          padding: 40px;
-          border-radius: 25px;
-          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-          transition: all 0.3s ease;
-          max-width: 500px;
-          width: 100%;
-        }
-        
-        form:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-        }
-        
-        .visitors-section {
-          margin: 5px 0; 
-          padding: 15px; 
-          background: rgba(255, 255, 255, 0.05);
-          border-radius: 15px;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .visitors-title {
-          color: #FFD700;
-          font-weight: 600;
-          margin-bottom: 8px;
-          font-size: 0.9rem; 
-        }
-        
-        /* CENTERED VISITOR COUNT */
-        .counter-widget {
-          transition: transform 0.3s ease;
-          display: block;
-          margin: 0 auto;
-        }
-        
-        .counter-widget img {
-          display: block;
-          margin: 0 auto;
-        }
-        
-        .counter-widget:hover {
-          transform: scale(1.05);
-        }
-        
-        .web-projects-btn {
-          background: linear-gradient(45deg, #667eea, #764ba2);
-          border: 2px solid rgba(255, 255, 255, 0.3);
-          border-radius: 12px;
-          padding: 12px 24px;
-          margin: 15px 0;
-          transition: all 0.3s ease;
-          position: relative;
-          overflow: hidden;
-        }
-        
-        .web-projects-btn::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-          transition: left 0.5s;
-        }
-        
-        .web-projects-btn:hover::before {
-          left: 100%;
-        }
-        
-        .web-projects-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-        
-        .web-projects-btn a {
-          color: white;
-          text-decoration: none;
-          font-weight: 600;
-          font-size: 1rem;
-          position: relative;
-          z-index: 1;
-        }
-        
-        .developer-credit {
-          margin-top: 15px;
-          font-size: 0.9rem;
-          color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .developer-credit a {
-          color: #FFD700;
-          text-decoration: none;
-          font-weight: 600;
-          transition: color 0.3s ease;
-        }
-        
-        .developer-credit a:hover {
-          color: #FFA500;
-        }
-        
-        .search-section {
-          margin-top: 20px;
-        }
-        
-        .input-group {
-          position: relative;
-          margin-bottom: 25px;
-        }
-        
-        input[type="text"] {
-          width: 100%;
-          padding: 15px 20px 15px 50px;
-          border: 2px solid rgba(255, 255, 255, 0.3);
-          border-radius: 25px;
-          background: rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(10px);
-          color: white;
-          font-size: 1rem;
-          font-weight: 400;
-          transition: all 0.3s ease;
-          outline: none;
-        }
-        
-        input[type="text"]::placeholder {
-          color: rgba(255, 255, 255, 0.7);
-        }
-        
-        input[type="text"]:focus {
-          border-color: #FFD700;
-          box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-          transform: translateY(-2px);
-        }
-        
-        .search-icon {
-          position: absolute;
-          left: 18px;
-          top: 50%;
-          transform: translateY(-50%);
-          color: rgba(255, 255, 255, 0.7);
-          font-size: 1.1rem;
-        }
-        
-        button {
-          background: linear-gradient(45deg, #FFD700, #FFA500);
-          color: white;
-          border: none;
-          border-radius: 25px;
-          padding: 15px 30px;
-          font-size: 1rem;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          position: relative;
-          overflow: hidden;
-          min-width: 150px;
-        }
-        
-        button::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-          transition: left 0.5s;
-        }
-        
-        button:hover::before {
-          left: 100%;
-        }
-        
-        button:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 15px 30px rgba(255, 165, 0, 0.4);
-        }
-        
-        button:active {
-          transform: translateY(-1px);
-        }
-        
-        .rating-result {
-          margin-top: 25px;
-          padding: 20px;
-          background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1));
-          border: 2px solid rgba(255, 215, 0, 0.3);
-          border-radius: 15px;
-          backdrop-filter: blur(10px);
-          animation: slideIn 0.5s ease-out;
-        }
-        
-        @keyframes slideIn {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        /* BLACK BOLD RATING LABEL */
-        .rating-result strong {
-          color: #000000;
-          font-size: 1.1rem;
-          font-weight: 700;
-        }
-        
-        /* BLACK EXTRA BOLD RATING VALUE */
-        .rating-value {
-          color: #000000;
-          font-weight: 900;
-          font-size: 1.2rem;
-        }
-        
-        @media (max-width: 768px) {
-          body {
-            padding: 10px;
-          }
-          
-          form {
-            padding: 30px 20px;
-          }
-          
-          .main-title {
-            font-size: 1rem;
-          }
-          
-          input[type="text"] {
-            padding: 12px 15px 12px 45px;
-          }
-          
-          button {
-            padding: 12px 25px;
-          }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { overflow-x: hidden; min-height: 100vh; }
+        body { font-family: 'Poppins', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); background-size: cover; background-position: center; background-attachment: fixed; color: white; flex-direction: column; text-align: center; padding: 20px; position: relative; }
+        body::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%); pointer-events: none; }
+        .main-container { position: relative; z-index: 1; animation: fadeInUp 1s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .header-section { margin-bottom: 5px; }
+        .imdb-logo { height: 35px; width: 70px; margin-bottom: 10px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3)); transition: transform 0.3s ease; }
+        .imdb-logo:hover { transform: scale(1.1); }
+        .main-title { background: linear-gradient(45deg, #fffeff, #ffd891, #ffc1b5a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-size: 1.2rem; font-weight: 700; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 5px; animation: shimmer 2s infinite; }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        form { display: flex; flex-direction: column; align-items: center; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); padding: 40px; border-radius: 25px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; max-width: 500px; width: 100%; }
+        form:hover { transform: translateY(-5px); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15); }
+        .visitors-section { margin: 5px 0; padding: 15px; background: rgba(255, 255, 255, 0.05); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .visitors-title { color: #FFD700; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; }
+        .counter-widget { transition: transform 0.3s ease; display: block; margin: 0 auto; }
+        .counter-widget img { display: block; margin: 0 auto; }
+        .counter-widget:hover { transform: scale(1.05); }
+        .web-projects-btn { background: linear-gradient(45deg, #667eea, #764ba2); border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 12px; padding: 12px 24px; margin: 15px 0; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .web-projects-btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transition: left 0.5s; }
+        .web-projects-btn:hover::before { left: 100%; }
+        .web-projects-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); }
+        .web-projects-btn a { color: white; text-decoration: none; font-weight: 600; font-size: 1rem; position: relative; z-index: 1; }
+        .developer-credit { margin-top: 15px; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8); }
+        .developer-credit a { color: #FFD700; text-decoration: none; font-weight: 600; transition: color 0.3s ease; }
+        .developer-credit a:hover { color: #FFA500; }
+        .search-section { margin-top: 20px; }
+        .input-group { position: relative; margin-bottom: 25px; width: 100%; }
+        input[type="text"] { width: 100%; padding: 15px 20px 15px 50px; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 25px; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); color: white; font-size: 1rem; font-weight: 400; transition: all 0.3s ease; outline: none; }
+        input[type="text"]::placeholder { color: rgba(255, 255, 255, 0.7); }
+        input[type="text"]:focus { border-color: #FFD700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); transform: translateY(-2px); }
+        .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: rgba(255, 255, 255, 0.7); font-size: 1.1rem; }
+        button { background: linear-gradient(45deg, #FFD700, #FFA500); color: white; border: none; border-radius: 25px; padding: 15px 30px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden; min-width: 150px; }
+        button::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: left 0.5s; }
+        button:hover::before { left: 100%; }
+        button:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 165, 0, 0.4); }
+        button:active { transform: translateY(-1px); }
+        .rating-result { margin-top: 25px; padding: 20px; background: linear-gradient(45deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.1)); border: 2px solid rgba(255, 215, 0, 0.3); border-radius: 15px; backdrop-filter: blur(10px); animation: slideIn 0.5s ease-out; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .rating-result strong { color: #000000; font-size: 1.1rem; font-weight: 700; }
+        .rating-value { color: #000000; font-weight: 900; font-size: 1.2rem; }
+        @media (max-width: 768px) { body { padding: 10px; } form { padding: 30px 20px; } .main-title { font-size: 1rem; } input[type="text"] { padding: 12px 15px 12px 45px; } button { padding: 12px 25px; } }
       </style>
     </head>
     <body>
@@ -371,20 +78,13 @@ app.get('/', (req, res) => {
           </div>
           
           <div class="visitors-section">
-            <div class="visitors-title">
-              <i class="fas fa-users"></i> VISITORS COUNT
-            </div>
+            <div class="visitors-title"><i class="fas fa-users"></i> VISITORS COUNT</div>
             <a href="https://www.hitwebcounter.com" target="_blank" class="counter-widget" style="display: inline-block;">
               <img src="https://hitwebcounter.com/counter/counter.php?page=13817460&style=0006&nbdigits=2&type=page&initCount=20" title="Counter Widget" alt="Visit counter For Websites" border="0" style="border-radius: 8px;">
             </a>
-            
             <div class="web-projects-btn">
-              <a href="https://yashwanthwebproject.netlify.app" target="_blank">
-                <i class="fas fa-code"></i>
-                  Web Development Projects
-              </a>
+              <a href="https://yashwanthwebproject.netlify.app" target="_blank"><i class="fas fa-code"></i> Web Development Projects</a>
             </div>
-            
             <div class="developer-credit">
               <span>Designed & Developed By</span> 
               <a href="https://github.com/yashu1wwww" target="_blank">Yashwanth R</a>
@@ -394,16 +94,11 @@ app.get('/', (req, res) => {
           <div class="search-section">
             <div class="input-group">
               <i class="fas fa-search search-icon"></i>
-              <input type="text" id="query" name="query" value="${movieQuery}" placeholder="Ex: RRR" onfocus="this.value = ''; const ratingEl = document.getElementById('rating'); if(ratingEl) ratingEl.innerHTML = '';">
+              <input type="text" id="query" name="query" value="${movieQuery}" placeholder="Ex: RRR, RRR 2022" onfocus="this.value = ''; const ratingEl = document.getElementById('rating'); if(ratingEl) ratingEl.innerHTML = '';">
             </div>
-            
-            <button type="submit">
-              <i class="fas fa-film"></i>
-              Search
-            </button>
+            <button type="submit"><i class="fas fa-film"></i> Search</button>
           </div>
           
-          <!-- Display IMDb Rating Inside the Form -->
           ${searchResult ? `
             <div id="rating" class="rating-result">
               <i class="fas fa-star" style="color: #FFD700; margin-right: 8px;"></i>
@@ -422,7 +117,7 @@ app.get('/search', async (req, res) => {
   if (!query) return res.redirect('/');
 
   const browser = await puppeteer.launch({
-    headless: true, 
+    headless: "new", // "new" headless is faster and less prone to timeouts
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',
@@ -435,11 +130,8 @@ app.get('/search', async (req, res) => {
 
   await page.setRequestInterception(true);
   page.on('request', (req) => {
-    if (['image', 'font', 'media'].includes(req.resourceType())) {
-      req.abort();
-    } else {
-      req.continue();
-    }
+    if (['image', 'font', 'media'].includes(req.resourceType())) req.abort();
+    else req.continue();
   });
 
   await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
@@ -447,59 +139,76 @@ app.get('/search', async (req, res) => {
     Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
   });
 
-  const searchUrl = `https://www.google.com/search?q=movie+rating+${encodeURIComponent(query)}`;
+  // ✅ AUTO QUERY: Appends "movie rating" automatically
+  const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query + ' movie rating')}`;
   
-  await page.goto(searchUrl, {
-    waitUntil: 'networkidle2', 
-    timeout: 15000
-  });
-
-  try {
-    await page.waitForSelector('#L2AGLb, button[aria-label="Accept all"]', { timeout: 3000 });
-    await page.click('#L2AGLb, button[aria-label="Accept all"]');
-    await new Promise(r => setTimeout(r, 1000)); 
-  } catch (e) {
-    // Ignore
-  }
-
   let rating = 'Rating not found';
-  
+
   try {
+    // ✅ FIX TIMEOUT: Changed to 'domcontentloaded' and increased timeout to 30s
+    await page.goto(searchUrl, {
+      waitUntil: 'domcontentloaded', 
+      timeout: 30000
+    });
+
+    // Handle Google Consent Popup
+    try {
+      await page.waitForSelector('#L2AGLb, button[aria-label="Accept all"]', { timeout: 3000 });
+      await page.click('#L2AGLb, button[aria-label="Accept all"]');
+      await new Promise(r => setTimeout(r, 1000)); 
+    } catch (e) { /* Ignore if no popup */ }
+
+    // Wait a brief moment for Knowledge Panel to render
+    await new Promise(r => setTimeout(r, 1500));
+
     const isCaptcha = await page.evaluate(() => {
       const text = document.body.innerText.toLowerCase();
-      return text.includes('unusual traffic') || 
-             text.includes('captcha') ||
-             document.querySelector('#captcha-form') !== null;
+      return text.includes('unusual traffic') || text.includes('captcha');
     });
 
     if (isCaptcha) {
-      rating = 'Google blocked the request (CAPTCHA). Try again later.';
+      rating = 'Google blocked (CAPTCHA). Try again later.';
     } else {
-      // ✅ UPDATED LOGIC: Fetch specifically from the IMDb rating class to avoid fake data
       rating = await page.evaluate(() => {
-        // 1. Target the specific class Google uses for IMDb ratings in the Knowledge Panel
-        const specificEl = document.querySelector('.IcqUx');
+        // ✅ 1. TARGET SPECIFIC DIV FIRST
+        const specificEl = document.querySelector('.yi40Hd.YrbPuc');
         if (specificEl) {
           const text = specificEl.textContent.trim();
-          const match = text.match(/(\d+\.\d+)\s*\/\s*10/);
-          if (match) return match[1];
+          const match = text.match(/(\d+\.?\d*)\s*\/\s*10/);
+          if (match) return match[1] + '/10';
         }
 
+        // ✅ 2. CTRL+F FALLBACK (Search all spans/divs)
         const elements = document.querySelectorAll('span, div');
         for (const el of elements) {
           const text = el.textContent.trim();
-          // Strict regex: must be exactly a decimal number followed by /10
-          if (/^\d+\.\d+\s*\/\s*10$/.test(text)) {
-            return text.match(/(\d+\.\d+)/)[1];
+          // Look for exactly "X.X/10" or "X/10"
+          if (/^\d+\.?\d*\s*\/\s*10$/.test(text)) {
+            const match = text.match(/(\d+\.?\d*)/);
+            if (match) {
+              const num = parseFloat(match[1]);
+              // Ensure it's a realistic movie rating (between 1.0 and 10.0)
+              if (num >= 1.0 && num <= 10.0) {
+                return match[1] + '/10';
+              }
+            }
           }
         }
         
+        // ✅ 3. LAST RESORT: Regex over whole body text
+        const bodyText = document.body.innerText;
+        const bodyMatch = bodyText.match(/IMDb\s*(\d+\.?\d*)\s*\/\s*10/i) || bodyText.match(/(\d+\.?\d*)\s*\/\s*10/);
+        if (bodyMatch) {
+           const num = parseFloat(bodyMatch[1]);
+           if (num >= 1.0 && num <= 10.0) return bodyMatch[1] + '/10';
+        }
+
         return 'Rating not found';
       });
     }
   } catch (e) {
-    console.error('Extraction error:', e);
-    rating = 'Rating not found';
+    console.error('Navigation/Extraction error:', e.message);
+    rating = 'Timeout or Error loading page';
   }
 
   console.log('IMDb Rating for "%s": %s', query, rating);
