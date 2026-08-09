@@ -1,17 +1,26 @@
 {
-  "name": "imdb-rating-scraper",
+  "name": "imdb-rating-fetcher",
   "version": "1.0.0",
-  "description": "Fetch real-time IMDb ratings for movies & TV shows via Google Search",
-  "main": "index.js",
+  "description": "IMDB Movies & TV Shows Ratings Count Fetcher",
+  "main": "server.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
+  "keywords": [
+    "imdb",
+    "puppeteer",
+    "express",
+    "scraper",
+    "movies"
+  ],
+  "author": "Yashwanth R",
+  "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "puppeteer": "^21.7.0"
+    "puppeteer": "^21.11.0"
   },
-  "keywords": ["imdb", "scraper", "rating", "puppeteer", "express", "google"],
-  "author": "Yashwanth R",
-  "license": "MIT"
+  "engines": {
+    "node": ">=16.0.0"
+  }
 }
